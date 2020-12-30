@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'firstlambda
+
+  Sample SAM Template for firstlambda
+
+  '
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: HelloWorldFunction
+      Handler: com.bharath.aws.lambda.DataTypes::coldstartBasics
+      Runtime: java11
+      MemorySize: 512
+      Timeout: 6
+      Environment:
+        Variables:
+          restapiurl: testurl
