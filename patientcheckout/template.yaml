@@ -67,3 +67,18 @@ Resources:
           Type: SNS # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Topic: !Ref PatientCheckoutDLQ
+  ClaimManagementFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: patientcheckout
+      Handler: com.bharath.aws.lambda.sqs.ClaimManagementLamdba::handler
+      Runtime: java11
+      MemorySize: 512
+      Events:
+        ClaimEvent:
+          Type: SQS # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Queue: !GetAtt ClaimManagementQueue.Arn
+            BatchSize: 10
+  ClaimManagementQueue:
+    Type: AWS::SQS::Queue
